@@ -21,11 +21,7 @@ int main() {
 	arr[1] = 1;
 	arr[2] = 2;
 	arr[3] = 4;
-	cout << "n = 1:" << stepPerms(1) << endl;
-	cout << "n = 2:" << stepPerms(2) << endl;
-	cout << "n = 3:" << stepPerms(3) << endl;
-	cout << "n = 4:" << stepPerms(4) << endl;
-	cout << "n = 5:" << stepPerms(5) << endl;
-	cout << "n = 6:" << stepPerms(6) << endl;	
-	cout << "n = 7:" << stepPerms(7) << endl;
+	for(int i = 0; i < 200; i++) {
+		cout << "n = " << i << ":" << stepPerms(i) << endl;
+	}
 }

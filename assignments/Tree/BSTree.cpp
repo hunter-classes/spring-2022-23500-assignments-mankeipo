@@ -80,6 +80,103 @@ void BSTree::setup(){
   n = new Node(3);
   n2->setLeft(n);
   n = new Node(7);
-  n2->setLeft(n);
+  n2->setRight(n);
   
+}
+
+int BSTree::search(int value){
+  Node *t = root;
+
+  while (t != nullptr){
+    int tval = t->getData();
+    if (tval==value){
+      // here we'd really return a full object
+      // with all the stuff associated with value
+      // not just an int
+      return value;
+    }
+
+    if (tval < value){
+      t = t->getRight();
+    } else {
+      t = t->getLeft();
+    }
+    
+  }
+
+  // if we get here then the value isn't
+  // in the tree
+
+  // normally, if we had a tree of objects
+  // we could return null but since we only have
+  // an int, we can't return an int to represent
+  // not found so we'll throw an exception
+
+  throw 1; // we should define our exceptions.
+
+    
+  
+}
+
+// we will always insert new nodes as leaves
+void BSTree::insert(int value){
+
+  // make a new node
+  Node *newnode = new Node(value);
+  
+  // search for where the node would go as a leaf
+  // that is, search until we get to null
+  // we can use the piggyback strategy of having
+  // a second pointer trail the lead pointer
+  Node *p = root;
+  Node *trailer;
+
+  
+  while (p != nullptr) {
+    // note that trailer is one level behind
+    trailer = p;
+    if (p->getData() == value){
+      // do the stuff when the node is already in the tree
+      return;
+    }
+    else if (p->getData() < value){
+      p = p->getRight(); 
+    } else {
+      p = p->getLeft();
+    }
+  }
+  
+  // handle the special case of the tree
+  // being empty (null)
+  if (root==nullptr){
+    root=newnode;
+  } else {
+    // trailer points to the node ABOVE where the new node
+    // will go.
+    // we have to figure out if newnode goes on the
+    // left of trailer or on the right of trailer
+    if (trailer->getData() < value){
+      trailer->setRight(newnode);
+    } else {
+      trailer->setLeft(newnode);
+    }
+
+  }
+}
+
+int rsearch(int value, Node *p) {
+	if (n == nullptr) {
+		throw -1;
+	}
+	if (p->getData() == value){
+		return value;
+	} else if (p->getData() < value) {
+		rsearch(value, p->getLeft());
+	} else {
+		rsearch(value, p->getRight());
+	}
+}
+
+int rsearch(int value) {
+	return rsearch(value, root);
 }
