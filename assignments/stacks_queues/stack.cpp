@@ -22,17 +22,30 @@ void Stack::push(int data){
         head=new_node;
 }
 
-
+bool Stack::is_empty() {
+	if(head == nullptr) {
+		return true;
+	} else {
+		return false;
+	}	
+}
 int Stack::pop() {
 	if(is_empty()) {
-		throw;
+		throw EMPTYSTACK;
 	} else {
-		Node *trailer = nullptr;
+		//Node *trailer = nullptr;
 		Node *walker = head;
 		int temp = head->getData();
-		trailer = walker;
-		walker = walker->getNext();
-		delete trailer;
+		head = walker->getNext();
+		delete walker;
 		return temp;
 	}
+}
+
+int Stack::top() {
+	if(is_empty()) {
+                throw EMPTYSTACK;
+        } else {
+                return head->getData();
+        }
 }		

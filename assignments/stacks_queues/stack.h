@@ -1,5 +1,6 @@
 #pragma once
 #include "Node.h"
+#define EMPTYSTACK 1
 
 class Stack {
 	private:
