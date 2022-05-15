@@ -1,4 +1,5 @@
 OBJECTS=main.o BSTree.o Node.o
+TESTS = tests.o BSTree.o Node.o
 LDFLAGS=
 CXXFLAGS=
 
@@ -12,5 +13,11 @@ main.o: main.cpp Node.h BSTree.h
 Node.o: Node.cpp Node.h
 	g++ -std=c++11 -c Node.cpp
 
+tests: $(TESTS)
+	g++ -o tests $(TESTS)
+
+tests.o: tests.cpp Node.h BSTree.h
+	g++ -std=c++11 -c tests.cpp
+
 clean:
-	rm -f $(OBJECTS) main
+	rm -f $(OBJECTS) main tests.o tests

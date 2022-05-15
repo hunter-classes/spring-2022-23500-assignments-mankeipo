@@ -171,7 +171,7 @@ int BSTree::rsearch(int value, Node *p) {
 	int x = p->getData();
 	if (x == value){
 		return value;
-	} else if (p->getData() < value) {
+	} else if (p->get:Data() < value) {
 		rsearch(value, p->getLeft());
 	} else {
 		rsearch(value, p->getRight());
@@ -198,70 +198,148 @@ int BSTree::rsearch(int value, Node *n){
 }
 
 void BSTree::d(Node *p, int value) {
-	Node *trailer = nullptr;
-	if(p == nullptr) {
-		throw 1;
-	}
-	while(p != nullptr) {
-		if(p->getData() == value) {
-			if(p->getRight() == nullptr || p->getLeft() == nullptr) { //Zero to one child
-				if(p->getRight() == nullptr && p->getLeft() == nullptr) { //zero
-					if(value > trailer->getData()) {
-						delete p;
-						p = nullptr;
-						if(trailer != nullptr) {
-							trailer->setRight(nullptr);
-						}
-						return;
-					} else {
-						delete p;
-						p = nullptr;
-						//trailer->setLeft(nullptr);
-						if(trailer != nullptr) {
-                                                        trailer->setLeft(nullptr);
-                                                }
-						return;
-					}
-				} else if(p->getLeft() != nullptr) { //one
-					if(value > trailer->getData()) {
-						if(trailer == nullptr) {
-                                                        root = p->getLeft();
-                                                } else {
-							trailer->setRight(p->getLeft());
-                                                	delete p;
-                                                	p = nullptr;
-                                                	return;
-						}
-                                        } else {
-						if(trailer == nullptr) {
-                                                        root = p->getRight();
-                                                } else {
-                                                        trailer->setLeft(p->getRight());
-                                                delete p;
-                                                p = nullptr;
-                                                return;
-						}
-                                        }
-				}
-			} else {
-				Node *lowest = p;
-				while(lowest->getLeft() != nullptr){
-					lowest = p->getLeft();
-				}
-				d(lowest->getData());
-				p->setData(lowest->getData());
-				return;
-			}
-		} else if (value > p->getData()) {
-			trailer = p;
+  Node *trailer = nullptr;
+  if(p == nullptr) {
+          throw 1;
+  }
+  while(p != nullptr) {
+    if(p->getData() == value) {
+      if(p->getRight() == nullptr || p->getLeft() == nullptr) {
+        if(p->getRight() == nullptr && p->getLeft() == nullptr) {
+          if(value > trailer->getData()) {
+            delete p;
+            p = nullptr;
+            if(trailer != nullptr) {
+              trailer->setRight(nullptr);
+            }
+            return;
+          } else {
+            delete p;
+            p = nullptr;
+            if(trailer != nullptr) {
+              trailer->setLeft(nullptr);
+            }
+            return;
+          }
+        } else if(p->getLeft() != nullptr) {
+          if(trailer == nullptr) {
+            root = p->getLeft();
+            return;
+          }
+          if(value > trailer->getData()) {
+            trailer->setRight(p->getLeft());
+            delete p;
+            p = nullptr;
+            return;
+          } else {
+            trailer->setLeft(p->getLeft());
+            delete p;
+            p = nullptr;
+            return;
+          }
+        } else if(p->getRight() != nullptr) {
+          if(trailer == nullptr) {
+            root = p->getLeft();
+            return;
+          }
+          if(value > trailer->getData()) {
+            trailer->setRight(p->getRight());
+            delete p;
+            p = nullptr;
+            return;
+          } else {
+            trailer->setLeft(p->getRight());
+            delete p;
+            p = nullptr;
+            return;
+          }
+        }
+      } else {
+        Node *lowest = p;
+        while(lowest->getLeft() != nullptr){
+                lowest = p->getLeft();
+        }
+        d(lowest->getData());
+        p->setData(lowest->getData());
+        return;
+      }
+    } else if (value > p->getData()) {
+      trailer = p;
 			p = p->getRight();
-		} else {
-			trailer = p;
+    } else {
+      trailer = p;
 			p = p->getLeft();
-		}
-	}
+    }
+  }
 }
 
 void BSTree::d(int value) {
 	d(root, value);
 }
+
+int BSTree::countLeaves(Node *p) {
+	if(p->getLeft() == nullptr && p->getRight() == nullptr) {
+		return 1;
+	} else if (p->getLeft() == nullptr){
+		return countLeaves(p->getRight());
+	} else if (p->getRight() == nullptr) {
+		return countLeaves(p->getLeft());
+	} else {
+		return countLeaves(p->getLeft()) + countLeaves(p->getRight());
+	}
+}
+
+int BSTree::countLeaves() {
+	return countLeaves(root);
+}
+
+int BSTree::height(Node *p) {
+	if(p == nullptr) {
+		return 0;
+	} else {
+		int leftHeight = height(p->getLeft());
+		int rightHeight = height(p->getRight());
+		return std::max(leftHeight, rightHeight) + 1;
+	}
+}
+
+int BSTree::height() {
+	return height(root);
+}
+
+int BSTree::sumAtLevel(Node *p, int level, int currentLevel) {
+	if(currentLevel == level && p == nullptr) {
+		return 0;
+	} else if(currentLevel == level) {
+		return p->getData();
+	} else {
+		return sumAtLevel(p->getLeft(),level,currentLevel+1) + sumAtLevel(p->getRight(),level,currentLevel+1);
+	}
+}
+
+int BSTree::sumAtLevel(int level) {
+	return sumAtLevel(root,level, 1);
+}
+/*
+void BSTree::rinsert(Node *p, int value) {
+	if(p->getLeft() == nullptr || p->getRight() == nullptr) {
+		if(value > p->getData() && p->getRight() == nullptr){
+			Node *newNode;
+			newNode->setData(value);
+			p->setRight(newNode);
+		} else if (value < p->getData() && p->getLeft() == nullptr){
+			Node *newNode;
+                        newNode->setData(value);
+			p->setLeft(newNode);
+		}
+	} else if (value > p->getData()) {
+		rinsert(p->getRight(), value);
+	} else {
+		rinsert(p->getLeft(), value);
+	}
+}
+
+void BSTree::rinsert(int value) {
+	rinsert(root, value);
+}
+*/

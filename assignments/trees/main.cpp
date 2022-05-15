@@ -6,13 +6,17 @@ int main()
 
   BSTree *t = new BSTree();
   t->setup();
-  //t->insert(10);
-  //t->insert(2);
+  //t->insert(40);
+  //t->insert(50);
+  std::cout <<  t->get_debug_string() << "\n";
+  t->d(3);
+  t->d(5);
+  t->d(20);
   std::cout <<  t->get_debug_string() << "\n";
   //int v = 15;
   //std::cout << t->rsearch(10) << std::endl;
-  t->d(20);
-  std::cout <<  t->get_debug_string() << "\n";
+  //t->d(20);
+  //std::cout <<  t->get_debug_string() << "\n";
   //std::cout << t->rsearch(3) << std::endl;
   // try {
   //   int x  = t->searchr(v);
@@ -28,6 +32,8 @@ int main()
   //   std::cout <<  t->get_debug_string() << "\n";
 
   //   std::cout << t->treesum() << "\n";
-    
+  std::cout << t->countLeaves() << std::endl;
+  //std::cout << t->height() << std::endl;
+  //std::cout << t->sumAtLevel(3) << std::endl;
   return 0;
 }
