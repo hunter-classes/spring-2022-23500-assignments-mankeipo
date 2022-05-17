@@ -18,4 +18,4 @@ tests.o: tests.cpp Node.h stack.h queues.h
 	g++ -c -std=c++11 tests.cpp
 
 clean:
-	rm -f tests.o main.o List.o Node.o stack.o queue.o main tests
+	rm -f tests.o main.o List.o Node.o stack.o queues.o main tests
