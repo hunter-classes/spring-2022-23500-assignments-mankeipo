@@ -56,7 +56,6 @@ TEST_CASE("BSTree::remove") {
         {
                 CHECK(e == 1);
         }
-	CHECK(t->get_debug_string() =="10 7   15  30  ");
 }
 
 TEST_CASE("count_leaves") {
